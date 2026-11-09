@@ -1,0 +1,16 @@
+---
+import { centro } from '../data/centro';
+const fila = [...centro.mutuas, ...centro.mutuas];
+---
+<section id="mutuas" aria-labelledby="mut-t" class="bg-vermell text-white">
+  <div class="mx-auto grid max-w-[90rem] gap-6 px-4 pt-16 sm:px-8 lg:grid-cols-12 lg:items-end">
+    <h2 id="mut-t" class="display text-[clamp(3rem,7vw,6rem)] lg:col-span-7" data-reveal>Más de 20 mutuas.</h2>
+    <p class="text-lg text-white/90 lg:col-span-4 lg:col-start-9" data-reveal style="--i:1">Fisioterapia, rehabilitación y medicina general a través de tu seguro. Si no ves la tuya, pregúntanos por WhatsApp.</p>
+  </div>
+  <div class="mt-12 overflow-hidden border-t border-white/25 py-6" aria-hidden="true">
+    <p class="cinta display flex w-max gap-10 whitespace-nowrap text-[2.4rem] text-white/95">
+      {fila.map((m) => <span class="flex items-center gap-10">{m}<span class="h-2 w-2 bg-white/60"></span></span>)}
+    </p>
+  </div>
+  <ul class="sr-only">{centro.mutuas.map((m) => <li>{m}</li>)}</ul>
+</section>

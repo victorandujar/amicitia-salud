@@ -1,7 +1,30 @@
 ---
 import Base from '../layouts/Base.astro';
-import { centro } from '../data/centro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Recorrido from '../components/Recorrido.astro';
+import Servicios from '../components/Servicios.astro';
+import Mutuas from '../components/Mutuas.astro';
+import Centro from '../components/Centro.astro';
+import Contacto from '../components/Contacto.astro';
+import Footer from '../components/Footer.astro';
+import MobileBar from '../components/MobileBar.astro';
+import Schema from '../components/Schema.astro';
 ---
-<Base title={`${centro.name} · Fisioterapia y rehabilitación deportiva en Sant Feliu de Llobregat`} description={`${centro.tagline} en ${centro.street}, ${centro.city}.`}>
-  <main id="contenido" class="mx-auto max-w-3xl px-4 py-24"><h1 class="display text-7xl">{centro.name}</h1></main>
+<Base
+  title="Amicitia Salud · Fisioterapia y rehabilitación deportiva en Sant Feliu de Llobregat"
+  description="Centro médico y de rehabilitación deportiva en el Passeig dels Pins, 47 (Sant Feliu de Llobregat). Fisioterapia, osteopatía, medicina general, pediatría, yoga y pilates. Más de 20 mutuas."
+>
+  <Schema slot="head" />
+  <Header />
+  <main id="contenido">
+    <Hero />
+    <Recorrido />
+    <Servicios />
+    <Mutuas />
+    <Centro />
+    <Contacto />
+  </main>
+  <Footer />
+  <MobileBar />
 </Base>

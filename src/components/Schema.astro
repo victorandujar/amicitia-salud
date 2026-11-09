@@ -1,0 +1,16 @@
+---
+import { centro } from '../data/centro';
+const data = {
+  '@context': 'https://schema.org',
+  '@type': ['MedicalClinic', 'Physiotherapy'],
+  name: centro.name,
+  description: `${centro.tagline}: fisioterapia, osteopatía, medicina general, pediatría, masajes, yoga y pilates.`,
+  url: Astro.site?.href,
+  telephone: centro.phone.e164,
+  email: centro.email,
+  address: { '@type': 'PostalAddress', streetAddress: centro.street, postalCode: centro.postalCode, addressLocality: centro.city, addressRegion: centro.region, addressCountry: 'ES' },
+  medicalSpecialty: ['Physiotherapy', 'PrimaryCare', 'Pediatric'],
+  sameAs: [centro.instagram, centro.tiktok],
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(data)} />

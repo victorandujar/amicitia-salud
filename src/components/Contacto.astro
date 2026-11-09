@@ -1,0 +1,36 @@
+---
+import { centro, telUrl } from '../data/centro';
+const canals = [
+  { href: centro.whatsapp, t: 'WhatsApp', d: 'La forma más rápida de pedir cita', ext: true, cls: 'bg-vermell text-white hover:bg-vermell-fosc' },
+  { href: telUrl, t: 'Teléfono', d: centro.phone.display, ext: false, cls: 'bg-white hover:bg-ink hover:text-white' },
+  { href: `mailto:${centro.email}`, t: 'Email', d: centro.email, ext: false, cls: 'bg-white hover:bg-ink hover:text-white' },
+];
+---
+<section id="contacto" aria-labelledby="contacto-t" class="bg-ink text-white">
+  <div class="mx-auto max-w-[90rem] px-4 py-20 sm:px-8 sm:py-28">
+    <div class="grid gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-6">
+        <p class="label text-[#9fd6b0]" data-reveal>Contacto</p>
+        <h2 id="contacto-t" class="display mt-4 text-[clamp(3.4rem,8vw,7rem)]" data-reveal style="--i:1">Pide tu<br /><span class="text-vermell">primera visita.</span></h2>
+        <address class="mt-8 not-italic text-xl text-white/80" data-reveal style="--i:2">
+          {centro.street}<br />{centro.postalCode} {centro.city}
+          <a href={centro.maps} target="_blank" rel="noopener" class="mt-4 block w-fit border-b-2 border-vermell pb-1 font-semibold text-white">Cómo llegar ↗</a>
+        </address>
+        <p class="mt-10 flex gap-6 text-white/70" data-reveal style="--i:3">
+          <a href={centro.instagram} target="_blank" rel="noopener" class="hover:text-white">Instagram</a>
+          <a href={centro.tiktok} target="_blank" rel="noopener" class="hover:text-white">TikTok</a>
+        </p>
+      </div>
+      <ul class="grid content-start gap-3 lg:col-span-6">
+        {canals.map((c, i) => (
+          <li data-reveal style={`--i:${i}`}>
+            <a href={c.href} target={c.ext ? '_blank' : undefined} rel={c.ext ? 'noopener' : undefined} class={`group flex items-center justify-between gap-4 px-6 py-6 text-ink transition-colors ${c.cls}`}>
+              <span><span class="display block text-4xl">{c.t}</span><span class="mt-1 block text-lg opacity-80 [overflow-wrap:anywhere]">{c.d}</span></span>
+              <span aria-hidden="true" class="text-3xl transition-transform group-hover:translate-x-1">→</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

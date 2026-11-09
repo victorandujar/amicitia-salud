@@ -1,0 +1,52 @@
+---
+const grups = [
+  {
+    titol: 'Recuperación', color: 'vermell',
+    items: [
+      { t: 'Fisioterapia', d: 'Fisioterapeutas titulados para recuperarte de lesiones, aliviar el dolor y mejorar la movilidad.' },
+      { t: 'Rehabilitación deportiva', d: 'Sala de readaptación con material para trabajar fuerza, equilibrio y control hasta volver a tu deporte.' },
+      { t: 'Osteopatía', d: 'Tratamiento del cuerpo en conjunto para dolores agudos y crónicos.' },
+      { t: 'Masajes', d: 'Terapéuticos, relajantes y deportivos.' },
+    ],
+  },
+  {
+    titol: 'Centro médico', color: 'verd',
+    items: [
+      { t: 'Medicina general', d: 'Consulta privada o a través de tu mutua.' },
+      { t: 'Pediatría', d: 'Atención a los más pequeños en cada etapa de su desarrollo.' },
+    ],
+  },
+  {
+    titol: 'Movimiento', color: 'ink',
+    items: [
+      { t: 'Yoga y pilates', d: 'Clases para ganar flexibilidad, fuerza y equilibrio, adaptadas a todos los niveles.' },
+      { t: 'Taller de higiene postural', d: 'Cómo sentarte, cargar y moverte en el día a día para no lesionarte.' },
+    ],
+  },
+] as const;
+const bg = { vermell: 'bg-vermell', verd: 'bg-verd', ink: 'bg-ink' } as const;
+---
+<section id="servicios" aria-labelledby="serv-t">
+  <div class="mx-auto max-w-[90rem] px-4 py-20 sm:px-8 sm:py-28">
+    <div class="grid gap-6 lg:grid-cols-12 lg:items-end">
+      <h2 id="serv-t" class="display text-[clamp(3rem,7vw,6rem)] lg:col-span-7" data-reveal>Todo en el<br />mismo centro.</h2>
+      <p class="text-lg text-ink-2 lg:col-span-4 lg:col-start-9" data-reveal style="--i:1">Fisioterapia, medicina y clases bajo el mismo techo: no tienes que ir de un centro a otro. Y cuando acabes la rehabilitación, puedes seguir en las clases.</p>
+    </div>
+    <div class="mt-14 grid gap-px bg-line lg:grid-cols-3">
+      {grups.map((g, gi) => (
+        <div class="bg-paper lg:px-8 lg:first:pl-0 lg:last:pr-0" data-reveal style={`--i:${gi}`}>
+          <h3 class="label flex items-center gap-3 py-5"><span class={`h-3 w-3 ${bg[g.color]}`} aria-hidden="true"></span>{g.titol}</h3>
+          <ul class="border-t-2 border-ink">
+            {g.items.map((it) => (
+              <li class="group relative border-b border-line py-6">
+                <span class={`absolute inset-y-0 left-0 w-0 ${bg[g.color]} transition-[width] duration-500 group-hover:w-1.5`} aria-hidden="true"></span>
+                <p class="display text-[2.1rem] transition-transform duration-300 group-hover:translate-x-4">{it.t}</p>
+                <p class="mt-2 max-w-sm text-ink-2 transition-transform duration-300 group-hover:translate-x-4">{it.d}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
