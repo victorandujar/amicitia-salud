@@ -1,0 +1,16 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+import { centro } from '../data/centro';
+---
+<footer class="bg-ink pb-28 text-white/70 lg:pb-0">
+  <div class="franja" aria-hidden="true"></div>
+  <div class="mx-auto grid max-w-[90rem] gap-8 px-4 py-12 sm:px-8 md:grid-cols-3 md:items-end">
+    <div class="w-fit bg-paper p-4"><Image src={logo} alt={centro.name} width={128} height={105} densities={[1, 2]} class="h-auto w-32" loading="lazy" /></div>
+    <p class="text-sm">{centro.name} · {centro.street}, {centro.postalCode} {centro.city}<br />Nº de registro sanitario: {centro.pendiente.registroSanitario ?? <mark class="bg-white/15 px-1 text-white">pendiente</mark>}</p>
+    <ul class="flex gap-5 text-sm md:justify-end">
+      <li><a href="/aviso-legal" class="hover:text-white">Aviso legal</a></li>
+      <li><a href="/privacidad" class="hover:text-white">Privacidad</a></li>
+    </ul>
+  </div>
+</footer>

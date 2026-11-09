@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-a.png';
+import { centro, telUrl } from '../data/centro';
+const nav = [
+  { href: '#recorrido', t: 'Tu recuperación' },
+  { href: '#servicios', t: 'Servicios' },
+  { href: '#mutuas', t: 'Mutuas' },
+  { href: '#centro', t: 'El centro' },
+  { href: '#contacto', t: 'Contacto' },
+];
+---
+<header class="sticky top-0 z-40 border-b border-line bg-paper/90 backdrop-blur">
+  <div class="mx-auto flex h-[4.5rem] max-w-[90rem] items-center justify-between gap-6 px-4 sm:px-8">
+    <a href="#" class="flex items-center gap-3">
+      <Image src={logo} alt="" width={40} height={45} densities={[1, 2, 3]} class="h-10 w-auto" loading="eager" />
+      <span class="leading-none">
+        <span class="display block text-[1.55rem] tracking-wide">Amicitia Salud</span>
+        <span class="label block whitespace-nowrap text-[0.62rem] text-ink-2">Sant Feliu de Llobregat</span>
+      </span>
+    </a>
+    <nav aria-label="Principal" class="hidden lg:block">
+      <ul class="flex gap-7 text-[0.98rem] font-medium">
+        {nav.map((n) => <li><a href={n.href} class="hover:text-vermell">{n.t}</a></li>)}
+      </ul>
+    </nav>
+    <div class="flex items-center gap-4">
+      <a href={telUrl} class="hidden font-semibold tabular-nums hover:text-vermell md:inline">{centro.phone.display}</a>
+      <a href={centro.whatsapp} class="btn btn-verd hidden min-h-11 whitespace-nowrap px-5 text-[0.95rem] lg:inline-flex" target="_blank" rel="noopener">Pedir cita</a>
+    </div>
+  </div>
+  <div class="franja" aria-hidden="true"></div>
+</header>

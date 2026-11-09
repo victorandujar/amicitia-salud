@@ -1,0 +1,91 @@
+---
+import { fases } from '../data/recorrido';
+// Geometria: cuixa horitzontal, el genoll a (230,150); la tíbia gira cap avall segons la flexió.
+const K = { x: 230, y: 150 };
+const TIBIA = 175;
+const R = 74;
+const ticks = Array.from({ length: 15 }, (_, i) => i * 10);
+const pt = (deg: number, r: number) => {
+  const a = (deg * Math.PI) / 180;
+  return { x: +(K.x + r * Math.cos(a)).toFixed(2), y: +(K.y + r * Math.sin(a)).toFixed(2) };
+};
+---
+<section id="recorrido" aria-labelledby="rec-t" class="relative overflow-hidden bg-verd-fosc text-white">
+  <div class="mx-auto max-w-[90rem] px-4 py-20 sm:px-8 sm:py-28">
+    <div class="grid gap-6 lg:grid-cols-12 lg:items-end">
+      <div class="lg:col-span-7">
+        <p class="label text-[#9fd6b0]" data-reveal>Tu recuperación</p>
+        <h2 id="rec-t" class="display mt-4 text-[clamp(3rem,7vw,6rem)]" data-reveal style="--i:1">El camino de vuelta,<br /><span class="text-vermell">grado a grado.</span></h2>
+      </div>
+      <p class="text-lg text-white/75 lg:col-span-4 lg:col-start-9" data-reveal style="--i:2">Mueve la rodilla y mira qué se trabaja en cada fase. Es orientativo: cada lesión es distinta y el plan lo decide el fisioterapeuta tras valorarte.</p>
+    </div>
+
+    <div class="mt-14 grid items-center gap-10 lg:grid-cols-12" data-gonio>
+      <div class="relative lg:col-span-7" data-reveal style="--i:1">
+        <svg viewBox="20 70 460 290" class="w-full max-w-[44rem]" role="img" aria-labelledby="gonio-desc">
+          <desc id="gonio-desc">Esquema de una pierna con un goniómetro en la rodilla que marca los grados de flexión.</desc>
+          <!-- escala del goniòmetre -->
+          <path d={`M ${pt(0, R + 22).x} ${pt(0, R + 22).y} A ${R + 22} ${R + 22} 0 0 1 ${pt(140, R + 22).x} ${pt(140, R + 22).y}`} fill="none" stroke="rgb(255 255 255 / 0.15)" stroke-width="14" />
+          {ticks.map((t) => {
+            const a = pt(t, R + 14); const b = pt(t, R + (t % 30 === 0 ? 34 : 28)); const l = pt(t, R + 50);
+            return <>
+              <line x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke="rgb(255 255 255 / 0.55)" stroke-width={t % 30 === 0 ? 2 : 1} />
+              {t % 30 === 0 && <text x={l.x} y={l.y} fill="rgb(255 255 255 / 0.6)" font-size="13" text-anchor="middle" dominant-baseline="middle" font-family="Barlow Condensed" font-weight="600">{t}°</text>}
+            </>;
+          })}
+          <!-- sector recorregut -->
+          <path data-sector fill="rgb(222 11 20 / 0.85)" stroke="#de0b14" stroke-width="2.5" d="" />
+          <!-- cuixa -->
+          <line x1="40" y1={K.y} x2={K.x} y2={K.y} stroke="#fff" stroke-width="30" stroke-linecap="round" />
+          <circle cx="40" cy={K.y} r="17" fill="#f6f4ef" />
+          <!-- tíbia + peu (gira) -->
+          <g data-tibia style={`transform-origin:${K.x}px ${K.y}px`}>
+            <line x1={K.x} y1={K.y} x2={K.x + TIBIA} y2={K.y} stroke="#fff" stroke-width="24" stroke-linecap="round" />
+            <path d={`M ${K.x + TIBIA} ${K.y} l 6 -46`} stroke="#fff" stroke-width="20" stroke-linecap="round" fill="none" />
+          </g>
+          <circle cx={K.x} cy={K.y} r="16" fill="#de0b14" stroke="#00441f" stroke-width="5" />
+        </svg>
+        <p class="absolute right-0 top-0 text-right max-sm:static max-sm:mb-2 max-sm:text-left">
+          <span class="label block text-white/60">Flexión de rodilla</span>
+          <span class="display block text-[clamp(4rem,9vw,7rem)] tabular-nums" aria-hidden="true"><span data-graus>15</span>°</span>
+        </p>
+      </div>
+
+      <div class="lg:col-span-5" data-reveal style="--i:2">
+        <label for="gonio-rang" class="label text-white/70">Fase de la recuperación</label>
+        <input id="gonio-rang" type="range" min="0" max="135" step="1" value="15" class="gonio mt-4 w-full" aria-valuetext={fases[0].nom} data-rang />
+        <ol class="mt-3 grid grid-cols-4 gap-2 text-center">
+          {fases.map((f, i) => (
+            <li><button type="button" data-salt={f.graus} class="label w-full border-t-4 border-white/20 pt-2 text-[0.7rem] text-white/60 transition-colors aria-[current=step]:border-vermell aria-[current=step]:text-white" aria-current={i === 0 ? 'step' : undefined}>{String(i + 1).padStart(2, '0')}</button></li>
+          ))}
+        </ol>
+        <div class="relative mt-8 min-h-[14rem]" aria-live="polite">
+          {fases.map((f, i) => (
+            <article data-fase={f.id} data-min={i === 0 ? 0 : Math.round((fases[i - 1]!.graus + f.graus) / 2)} hidden={i !== 0}>
+              <h3 class="display text-5xl">{f.nom}</h3>
+              <p class="mt-4 max-w-md text-lg text-white/80">{f.text}</p>
+              <ul class="mt-6 flex flex-wrap gap-2">
+                {f.serveis.map((s) => <li class="bg-white px-3 py-1.5 font-semibold text-verd-fosc">{s}</li>)}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .gonio { -webkit-appearance: none; appearance: none; height: 2.75rem; background: transparent; cursor: grab; }
+  .gonio::-webkit-slider-runnable-track { height: 6px; background: linear-gradient(90deg, #de0b14 var(--p, 11%), rgb(255 255 255 / 0.2) var(--p, 11%)); }
+  .gonio::-moz-range-track { height: 6px; background: rgb(255 255 255 / 0.2); }
+  .gonio::-moz-range-progress { height: 6px; background: #de0b14; }
+  .gonio::-webkit-slider-thumb { -webkit-appearance: none; width: 2.25rem; height: 2.25rem; margin-top: -15px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 6px rgb(222 11 20 / 0.9); }
+  .gonio::-moz-range-thumb { width: 2.25rem; height: 2.25rem; border: 0; border-radius: 50%; background: #fff; box-shadow: 0 0 0 6px rgb(222 11 20 / 0.9); }
+  [data-tibia] { transition: transform 120ms linear; }
+</style>
+
+<script>
+  import { initGoniometre } from '../scripts/goniometre';
+  document.querySelectorAll<HTMLElement>('[data-gonio]').forEach((el) => initGoniometre(el));
+</script>
