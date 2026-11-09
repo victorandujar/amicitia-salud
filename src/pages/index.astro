@@ -1,0 +1,7 @@
+---
+import Base from '../layouts/Base.astro';
+import { centro } from '../data/centro';
+---
+<Base title={`${centro.name} · Fisioterapia y rehabilitación deportiva en Sant Feliu de Llobregat`} description={`${centro.tagline} en ${centro.street}, ${centro.city}.`}>
+  <main id="contenido" class="mx-auto max-w-3xl px-4 py-24"><h1 class="display text-7xl">{centro.name}</h1></main>
+</Base>
